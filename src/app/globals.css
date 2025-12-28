@@ -1,26 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Exo+2:wght@400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Fortnite Color Palette */
+  --storm-blue: #1e3a5f;
+  --storm-purple: #4b2d7f;
+  --victory-gold: #f5c51b;
+  --loot-blue: #00d4ff;
+  --legendary-orange: #ff6b2b;
+  --epic-purple: #a855f7;
+  --rare-blue: #3b82f6;
+  --uncommon-green: #22c55e;
+  --common-gray: #9ca3af;
+  --dark-bg: #0a0f1a;
+  --card-bg: #141b2d;
+  --card-border: #1e293b;
+  
+  /* Fonts */
+  --font-display: 'Russo One', sans-serif;
+  --font-body: 'Exo 2', sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background: var(--dark-bg);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Storm Background Effect */
+.storm-bg {
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(75, 45, 127, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(30, 58, 95, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 40%),
+    linear-gradient(180deg, var(--dark-bg) 0%, #0d1524 100%);
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Animated Storm Particles */
+.storm-particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.storm-particles::before,
+.storm-particles::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(0, 212, 255, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(168, 85, 247, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(245, 197, 27, 0.4), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(0, 212, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(168, 85, 247, 0.4), transparent);
+  background-size: 200px 200px;
+  animation: stormFloat 60s linear infinite;
+}
+
+.storm-particles::after {
+  animation-duration: 90s;
+  animation-direction: reverse;
+  opacity: 0.5;
+}
+
+@keyframes stormFloat {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to { transform: translate(-100px, -100px) rotate(360deg); }
+}
+
+/* Victory Banner Animation */
+@keyframes victoryPulse {
+  0%, 100% { 
+    text-shadow: 
+      0 0 20px rgba(245, 197, 27, 0.8),
+      0 0 40px rgba(245, 197, 27, 0.6),
+      0 0 60px rgba(245, 197, 27, 0.4);
+  }
+  50% { 
+    text-shadow: 
+      0 0 30px rgba(245, 197, 27, 1),
+      0 0 60px rgba(245, 197, 27, 0.8),
+      0 0 90px rgba(245, 197, 27, 0.6);
+  }
+}
+
+.victory-text {
+  animation: victoryPulse 2s ease-in-out infinite;
+}
+
+/* Card Glow Effect */
+.card-glow {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--loot-blue), var(--epic-purple), var(--legendary-orange));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+.card-glow:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: transparent;
+}
+
+/* Rarity Borders */
+.rarity-legendary {
+  border-color: var(--legendary-orange) !important;
+  box-shadow: 0 0 20px rgba(255, 107, 43, 0.3);
+}
+
+.rarity-epic {
+  border-color: var(--epic-purple) !important;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.rarity-rare {
+  border-color: var(--rare-blue) !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(135deg, var(--victory-gold) 0%, #d4a818 100%);
+  color: #000;
+  font-family: var(--font-display);
+  font-weight: bold;
+  padding: 12px 32px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 197, 27, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--loot-blue);
+  font-family: var(--font-display);
+  font-weight: bold;
+  padding: 12px 32px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid var(--loot-blue);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--loot-blue);
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+/* Diagonal Clip */
+.diagonal-clip {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), 0 100%);
+}
+
+.diagonal-clip-reverse {
+  clip-path: polygon(0 0, 100% 50px, 100% 100%, 0 100%);
+}
+
+/* Angular Frame */
+.angular-frame {
+  clip-path: polygon(
+    0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px,
+    100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px)
+  );
+}
+
+/* Heading Styles */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+/* Link Underline Animation */
+.link-glow {
+  position: relative;
+  color: var(--loot-blue);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--loot-blue), var(--epic-purple));
+  transition: width 0.3s ease;
+}
+
+.link-glow:hover::after {
+  width: 100%;
+}
+
+.link-glow:hover {
+  color: var(--victory-gold);
+}
+
+/* Blog Post Content Styles */
+.blog-content {
+  line-height: 1.8;
+  font-size: 1.125rem;
+}
+
+.blog-content h2 {
+  color: var(--victory-gold);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+}
+
+.blog-content h3 {
+  color: var(--loot-blue);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+}
+
+.blog-content p {
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.blog-content ul, .blog-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.blog-content strong {
+  color: var(--victory-gold);
+}
+
+.blog-content a {
+  color: var(--loot-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-content a:hover {
+  color: var(--epic-purple);
+}
+
+.blog-content blockquote {
+  border-left: 4px solid var(--epic-purple);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(168, 85, 247, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.blog-content code {
+  background: rgba(0, 212, 255, 0.15);
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--loot-blue);
+}
+
+.blog-content pre {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--card-border);
+}
+
+.blog-content pre code {
+  background: transparent;
+  padding: 0;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--storm-purple);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--epic-purple);
+}
+
+/* Selection */
+::selection {
+  background: var(--epic-purple);
+  color: white;
 }
