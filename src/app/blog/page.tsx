@@ -1,21 +1,26 @@
 import Link from 'next/link';
-import { blogPosts, getAllCategories, categoryLabels, categoryColors } from '@/data/posts';
+import { getAllPosts, getAllCategories, categoryLabels } from '@/data/posts';
 import BlogCard from '@/components/BlogCard';
 
 export const metadata = {
-  title: "All Posts | Lucas's Fortnite Blog",
-  description: "Browse all of Lucas's Fortnite blog posts including tips, news, skin reviews, building guides, and more!"
+  title: "All Posts | Cascavo's Fortnite Blog",
+  description: "Browse all of Cascavo's Fortnite blog posts including tips, news, skin reviews, building guides, and more!"
 };
 
-export default function BlogPage() {
-  const categories = getAllCategories();
+export const revalidate = 60;
+
+export default async function BlogPage() {
+  const [posts, categories] = await Promise.all([
+    getAllPosts(),
+    Promise.resolve(getAllCategories())
+  ]);
 
   return (
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 
+          <h1
             className="text-3xl md:text-5xl font-bold text-white mb-4"
             style={{ fontFamily: 'var(--font-display)' }}
           >
@@ -38,7 +43,7 @@ export default function BlogPage() {
             <Link
               key={category}
               href={`/blog/category/${category}`}
-              className={`px-4 py-2 bg-[var(--card-bg)] border border-[var(--card-border)] text-gray-300 rounded-lg font-medium hover:border-[var(--loot-blue)] hover:text-[var(--loot-blue)] transition-colors`}
+              className="px-4 py-2 bg-[var(--card-bg)] border border-[var(--card-border)] text-gray-300 rounded-lg font-medium hover:border-[var(--loot-blue)] hover:text-[var(--loot-blue)] transition-colors"
             >
               {categoryLabels[category]}
             </Link>
@@ -46,14 +51,13 @@ export default function BlogPage() {
         </div>
 
         {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
-        </div>
-
-        {/* Empty state - in case there are no posts */}
-        {blogPosts.length === 0 && (
+        {posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <BlogCard key={post.slug} post={post} />
+            ))}
+          </div>
+        ) : (
           <div className="text-center py-20">
             <div className="text-6xl mb-4">🎮</div>
             <h3 className="text-xl font-bold text-white mb-2">No posts yet!</h3>

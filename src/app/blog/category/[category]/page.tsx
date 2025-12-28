@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostsByCategory, getAllCategories, categoryLabels, categoryColors, BlogPost } from '@/data/posts';
+import { getPostsByCategory, getAllCategories, categoryLabels, categoryColors, Category } from '@/data/posts';
 import BlogCard from '@/components/BlogCard';
 import type { Metadata } from 'next';
 
@@ -8,8 +8,11 @@ interface PageProps {
   params: Promise<{ category: string }>;
 }
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
-  return getAllCategories().map((category) => ({
+  const categories = getAllCategories();
+  return categories.map((category) => ({
     category,
   }));
 }
@@ -17,18 +20,18 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { category } = await params;
   const validCategories = getAllCategories();
-  
-  if (!validCategories.includes(category as BlogPost['category'])) {
+
+  if (!validCategories.includes(category as Category)) {
     return {
       title: 'Category Not Found',
     };
   }
 
-  const label = categoryLabels[category as BlogPost['category']];
+  const label = categoryLabels[category as Category];
 
   return {
-    title: `${label} | Lucas's Fortnite Blog`,
-    description: `Browse all ${label.toLowerCase()} posts on Lucas's Fortnite Blog!`,
+    title: `${label} | Cascavo's Fortnite Blog`,
+    description: `Browse all ${label.toLowerCase()} posts on Cascavo's Fortnite Blog!`,
   };
 }
 
@@ -36,13 +39,13 @@ export default async function CategoryPage({ params }: PageProps) {
   const { category } = await params;
   const validCategories = getAllCategories();
 
-  if (!validCategories.includes(category as BlogPost['category'])) {
+  if (!validCategories.includes(category as Category)) {
     notFound();
   }
 
-  const posts = getPostsByCategory(category as BlogPost['category']);
-  const label = categoryLabels[category as BlogPost['category']];
-  const color = categoryColors[category as BlogPost['category']];
+  const posts = await getPostsByCategory(category as Category);
+  const label = categoryLabels[category as Category];
+  const color = categoryColors[category as Category];
 
   return (
     <div className="py-12">
@@ -54,14 +57,14 @@ export default async function CategoryPage({ params }: PageProps) {
               {label}
             </span>
           </div>
-          <h1 
+          <h1
             className="text-3xl md:text-5xl font-bold text-white mb-4"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {label.toUpperCase()} <span className="text-[var(--victory-gold)]">POSTS</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            All my posts about {label.toLowerCase().replace(/[^\w\s]/g, '').trim()}! 
+            All my posts about {label.toLowerCase().replace(/[^\w\s]/g, '').trim()}!
             Check out the latest tips and content.
           </p>
         </div>
