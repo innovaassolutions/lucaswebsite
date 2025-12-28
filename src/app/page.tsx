@@ -26,7 +26,7 @@ export default function Home() {
             className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white victory-text"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            LUCAS&apos;S<br />
+            CASCAVO&apos;S<br />
             <span className="text-[var(--victory-gold)]">FORTNITE BLOG</span>
           </h1>
           

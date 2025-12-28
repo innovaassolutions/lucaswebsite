@@ -21,7 +21,7 @@ export default function Header() {
               </div>
               <div>
                 <h1 className="text-lg font-bold text-white leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-                  LUCAS
+                  CASCAVO
                 </h1>
                 <span className="text-xs text-[var(--loot-blue)] tracking-wider">FORTNITE BLOG</span>
               </div>
