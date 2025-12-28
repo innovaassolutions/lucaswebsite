@@ -1,0 +1,222 @@
+import { config } from 'dotenv'
+import { createClient } from '@sanity/client'
+
+// Load environment variables from .env.local
+config({ path: '.env.local' })
+
+const client = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  apiVersion: '2024-01-01',
+  token: process.env.SANITY_API_TOKEN, // Need a write token
+  useCdn: false,
+})
+
+const posts = [
+  {
+    _type: 'post',
+    title: 'Top 5 Landing Spots in Chapter 6 Season 1',
+    slug: { _type: 'slug', current: 'best-landing-spots-chapter-6' },
+    excerpt: "Looking for the best places to drop? I've tested all the new POIs and found the spots with the best loot and rotation options!",
+    category: 'tips',
+    rarity: 'legendary',
+    readTime: 4,
+    featured: true,
+    publishedAt: '2024-12-15T00:00:00Z',
+    content: [
+      { _type: 'block', _key: 'h1', style: 'h2', children: [{ _type: 'span', _key: 's1', text: 'Finding the Perfect Drop' }] },
+      { _type: 'block', _key: 'p1', style: 'normal', children: [{ _type: 'span', _key: 's2', text: "Hey everyone, Lucas here! After playing hundreds of matches this season, I've figured out the absolute BEST landing spots for Chapter 6. Whether you're going for high-kill games or just want to survive to the end, I've got you covered!" }] },
+      { _type: 'block', _key: 'h2', style: 'h2', children: [{ _type: 'span', _key: 's3', text: "1. Demon's Dojo" }] },
+      { _type: 'block', _key: 'p2', style: 'normal', children: [{ _type: 'span', _key: 's4', text: 'This is my personal favorite this season. The dojo has ' }, { _type: 'span', _key: 's5', text: 'amazing loot density', marks: ['strong'] }, { _type: 'span', _key: 's6', text: ' with multiple chests in a small area. Plus, the martial arts theme is super cool! The ninja NPCs here can give you some awesome quests too.' }] },
+      { _type: 'block', _key: 'p3', style: 'normal', children: [{ _type: 'span', _key: 's7', text: 'Pro tip: Land on the roof first to grab the guaranteed chest, then work your way down through the building.' }] },
+      { _type: 'block', _key: 'h3', style: 'h2', children: [{ _type: 'span', _key: 's8', text: '2. Seaport City' }] },
+      { _type: 'block', _key: 'p4', style: 'normal', children: [{ _type: 'span', _key: 's9', text: "If you like hot drops with lots of action, Seaport City is the place to be. It's got tons of floor loot, multiple vending machines, great rotation options with boats nearby, and usually 5-10 players drop here." }] },
+      { _type: 'block', _key: 'h4', style: 'h2', children: [{ _type: 'span', _key: 's10', text: '3. Nightshift Forest' }] },
+      { _type: 'block', _key: 'p5', style: 'normal', children: [{ _type: 'span', _key: 's11', text: "For a more chill drop, Nightshift Forest is perfect. It's usually uncontested and has enough loot for a full squad. The spooky vibes are awesome too!" }] },
+      { _type: 'block', _key: 'q1', style: 'blockquote', children: [{ _type: 'span', _key: 's12', text: '"The best players know when to fight and when to loot up first" - a lesson I learned the hard way!' }] },
+      { _type: 'block', _key: 'h5', style: 'h2', children: [{ _type: 'span', _key: 's13', text: '4. Mount Olympus' }] },
+      { _type: 'block', _key: 'p6', style: 'normal', children: [{ _type: 'span', _key: 's14', text: "The mythic weapons here are INSANE. If you can grab Zeus's Lightning Bolt, you're basically guaranteed top 10. Just be ready for a fight because everyone wants those mythics!" }] },
+      { _type: 'block', _key: 'h6', style: 'h2', children: [{ _type: 'span', _key: 's15', text: '5. Restored Reels' }] },
+      { _type: 'block', _key: 'p7', style: 'normal', children: [{ _type: 'span', _key: 's16', text: "This movie studio POI is underrated. Great loot, fun theme, and most players skip it. It's my go-to spot when I want to play for the win." }] },
+      { _type: 'block', _key: 'h7', style: 'h3', children: [{ _type: 'span', _key: 's17', text: 'Final Thoughts' }] },
+      { _type: 'block', _key: 'p8', style: 'normal', children: [{ _type: 'span', _key: 's18', text: "Remember, the best landing spot is the one that matches your playstyle. If you're cracked at fighting, go for the hot drops. If you prefer playing smart, choose the quieter spots and loot up!" }] },
+      { _type: 'block', _key: 'p9', style: 'normal', children: [{ _type: 'span', _key: 's19', text: 'Let me know in the comments what YOUR favorite landing spot is! See you on the Battle Bus! 🚌' }] },
+    ],
+  },
+  {
+    _type: 'post',
+    title: 'Winterfest 2024: Complete Free Rewards Guide',
+    slug: { _type: 'slug', current: 'winter-fest-2024-guide' },
+    excerpt: "Don't miss out on these amazing free skins and cosmetics! Here's everything you need to know about Winterfest 2024.",
+    category: 'news',
+    rarity: 'epic',
+    readTime: 3,
+    featured: true,
+    publishedAt: '2024-12-20T00:00:00Z',
+    content: [
+      { _type: 'block', _key: 'h1', style: 'h2', children: [{ _type: 'span', _key: 's1', text: 'Winterfest is HERE!' }] },
+      { _type: 'block', _key: 'p1', style: 'normal', children: [{ _type: 'span', _key: 's2', text: "YO! Winterfest 2024 just dropped and it's absolutely STACKED with free rewards. I'm so hyped to share everything you need to know to get all the goodies!" }] },
+      { _type: 'block', _key: 'h2', style: 'h2', children: [{ _type: 'span', _key: 's3', text: 'How It Works' }] },
+      { _type: 'block', _key: 'p2', style: 'normal', children: [{ _type: 'span', _key: 's4', text: "Just like previous years, you'll visit the Winterfest cabin every day to open a present. There are " }, { _type: 'span', _key: 's5', text: '14 presents total', marks: ['strong'] }, { _type: 'span', _key: 's6', text: ", and you can open one per day. But here's the cool part - you can choose which present to open!" }] },
+      { _type: 'block', _key: 'h3', style: 'h3', children: [{ _type: 'span', _key: 's7', text: 'The Free Skins' }] },
+      { _type: 'block', _key: 'p3', style: 'normal', children: [{ _type: 'span', _key: 's8', text: "This year we're getting TWO free skins: Frost Commander (an icy soldier with reactive effects) and Snowbell (a super cute holiday-themed skin). Both skins come with their own back blings too!" }] },
+      { _type: 'block', _key: 'h4', style: 'h2', children: [{ _type: 'span', _key: 's9', text: 'Other Rewards' }] },
+      { _type: 'block', _key: 'p4', style: 'normal', children: [{ _type: 'span', _key: 's10', text: 'Besides the skins, you can get: 2 Pickaxes, 3 Wraps, 2 Emotes, 1 Glider, and music packs and loading screens!' }] },
+      { _type: 'block', _key: 'h5', style: 'h2', children: [{ _type: 'span', _key: 's11', text: 'Present Selection Tips' }] },
+      { _type: 'block', _key: 'q1', style: 'blockquote', children: [{ _type: 'span', _key: 's12', text: 'Check online guides or watch streamers open their presents first. Then you can pick exactly which ones you want!' }] },
+      { _type: 'block', _key: 'h6', style: 'h3', children: [{ _type: 'span', _key: 's13', text: "Don't Forget the Challenges!" }] },
+      { _type: 'block', _key: 'p5', style: 'normal', children: [{ _type: 'span', _key: 's14', text: 'There are also special Winterfest challenges that give you extra XP and exclusive rewards. Make sure to complete them before the event ends on January 7th!' }] },
+      { _type: 'block', _key: 'p6', style: 'normal', children: [{ _type: 'span', _key: 's15', text: "Happy holidays everyone! Let's get these free rewards! 🎄❄️" }] },
+    ],
+  },
+  {
+    _type: 'post',
+    title: 'Building 101: Master the Basics in 2024',
+    slug: { _type: 'slug', current: 'building-tips-for-beginners' },
+    excerpt: 'New to building? These tips will help you go from noob to pro in no time! Learn walls, ramps, and basic techniques.',
+    category: 'builds',
+    rarity: 'rare',
+    readTime: 5,
+    featured: false,
+    publishedAt: '2024-12-10T00:00:00Z',
+    content: [
+      { _type: 'block', _key: 'h1', style: 'h2', children: [{ _type: 'span', _key: 's1', text: 'Why Building Matters' }] },
+      { _type: 'block', _key: 'p1', style: 'normal', children: [{ _type: 'span', _key: 's2', text: "Hey everyone! So many new players ask me about building, so I wanted to make a complete guide. Building is what makes Fortnite different from other battle royales, and mastering it is KEY to getting those Victory Royales!" }] },
+      { _type: 'block', _key: 'h2', style: 'h2', children: [{ _type: 'span', _key: 's3', text: 'The Basic Builds' }] },
+      { _type: 'block', _key: 'h3', style: 'h3', children: [{ _type: 'span', _key: 's4', text: 'Walls' }] },
+      { _type: 'block', _key: 'p2', style: 'normal', children: [{ _type: 'span', _key: 's5', text: "Walls are your best friend! Whenever you get shot at, immediately throw up a wall. It's called " }, { _type: 'span', _key: 's6', text: '"panic building"', marks: ['strong'] }, { _type: 'span', _key: 's7', text: ' and it will save your life SO many times.' }] },
+      { _type: 'block', _key: 'h4', style: 'h3', children: [{ _type: 'span', _key: 's8', text: 'Ramps' }] },
+      { _type: 'block', _key: 'p3', style: 'normal', children: [{ _type: 'span', _key: 's9', text: 'Ramps give you height advantage. In Fortnite, ' }, { _type: 'span', _key: 's10', text: 'height = power', marks: ['strong'] }, { _type: 'span', _key: 's11', text: '. Always try to get above your opponent!' }] },
+      { _type: 'block', _key: 'h5', style: 'h3', children: [{ _type: 'span', _key: 's12', text: 'Floors' }] },
+      { _type: 'block', _key: 'p4', style: 'normal', children: [{ _type: 'span', _key: 's13', text: "Floors protect you from below and let you extend your builds. They're also great for creating peek spots." }] },
+      { _type: 'block', _key: 'h6', style: 'h2', children: [{ _type: 'span', _key: 's14', text: 'Your First Combo: The Ramp Rush' }] },
+      { _type: 'block', _key: 'p5', style: 'normal', children: [{ _type: 'span', _key: 's15', text: "Here's the simplest push technique: Place a ramp, place a wall in front of the ramp, and repeat as you move forward. This protects you while you gain height on your opponent!" }] },
+      { _type: 'block', _key: 'h7', style: 'h2', children: [{ _type: 'span', _key: 's16', text: 'Practice Tips' }] },
+      { _type: 'block', _key: 'p6', style: 'normal', children: [{ _type: 'span', _key: 's17', text: "The best way to improve is to practice! Spend 10 minutes in creative mode every day, practice building in no-pressure situations, watch pro players and try to copy their techniques, and don't be afraid to die while learning!" }] },
+      { _type: 'block', _key: 'q1', style: 'blockquote', children: [{ _type: 'span', _key: 's18', text: 'Everyone was bad at building at first. The only way to get better is to keep trying!' }] },
+      { _type: 'block', _key: 'h8', style: 'h3', children: [{ _type: 'span', _key: 's19', text: 'My Settings' }] },
+      { _type: 'block', _key: 'p7', style: 'normal', children: [{ _type: 'span', _key: 's20', text: 'I recommend these settings for building: Builder Pro control scheme (essential!), Turbo Building ON, and Confirm Edit on Release ON.' }] },
+      { _type: 'block', _key: 'p8', style: 'normal', children: [{ _type: 'span', _key: 's21', text: 'Good luck out there, and remember - practice makes perfect! 🔨' }] },
+    ],
+  },
+  {
+    _type: 'post',
+    title: 'My Top 10 Skins of December 2024',
+    slug: { _type: 'slug', current: 'best-skins-december-2024' },
+    excerpt: 'From collabs to original designs, here are the skins that are absolutely FIRE this month!',
+    category: 'skins',
+    rarity: 'epic',
+    readTime: 4,
+    featured: false,
+    publishedAt: '2024-12-18T00:00:00Z',
+    content: [
+      { _type: 'block', _key: 'h1', style: 'h2', children: [{ _type: 'span', _key: 's1', text: "December's Best Skins!" }] },
+      { _type: 'block', _key: 'p1', style: 'normal', children: [{ _type: 'span', _key: 's2', text: "What's up everyone! December has been INSANE for skins in the item shop. Here are my personal top 10 picks from this month!" }] },
+      { _type: 'block', _key: 'h2', style: 'h2', children: [{ _type: 'span', _key: 's3', text: '10. Snowmando' }] },
+      { _type: 'block', _key: 'p2', style: 'normal', children: [{ _type: 'span', _key: 's4', text: 'A classic Winterfest skin that comes back every year. Love the snowman vibes!' }] },
+      { _type: 'block', _key: 'h3', style: 'h2', children: [{ _type: 'span', _key: 's5', text: '9. Glacial Rex' }] },
+      { _type: 'block', _key: 'p3', style: 'normal', children: [{ _type: 'span', _key: 's6', text: 'An ice version of the T-Rex skin. The reactive frost effects are super cool.' }] },
+      { _type: 'block', _key: 'h4', style: 'h2', children: [{ _type: 'span', _key: 's7', text: '8. Blizzabelle' }] },
+      { _type: 'block', _key: 'p4', style: 'normal', children: [{ _type: 'span', _key: 's8', text: 'Free last year but still one of my favorite holiday skins. So clean!' }] },
+      { _type: 'block', _key: 'h5', style: 'h2', children: [{ _type: 'span', _key: 's9', text: '7. Frost Broker' }] },
+      { _type: 'block', _key: 'p5', style: 'normal', children: [{ _type: 'span', _key: 's10', text: 'The business suit + ice combo is unique and looks awesome in-game.' }] },
+      { _type: 'block', _key: 'h6', style: 'h2', children: [{ _type: 'span', _key: 's11', text: '6. Polar Patroller' }] },
+      { _type: 'block', _key: 'p6', style: 'normal', children: [{ _type: 'span', _key: 's12', text: 'GIANT POLAR BEAR. Need I say more? Absolute unit of a skin.' }] },
+      { _type: 'block', _key: 'h7', style: 'h2', children: [{ _type: 'span', _key: 's13', text: '5. Lady Gaga - Chromatica Armor' }] },
+      { _type: 'block', _key: 'p7', style: 'normal', children: [{ _type: 'span', _key: 's14', text: "The collab skin is fire! All three styles are incredible and the built-in emotes are chef's kiss." }] },
+      { _type: 'block', _key: 'h8', style: 'h2', children: [{ _type: 'span', _key: 's15', text: '4. Ariana Grande' }] },
+      { _type: 'block', _key: 'p8', style: 'normal', children: [{ _type: 'span', _key: 's16', text: 'She came back to the shop! One of the best concert skins ever made.' }] },
+      { _type: 'block', _key: 'h9', style: 'h2', children: [{ _type: 'span', _key: 's17', text: '3. Tron Legacy Skins' }] },
+      { _type: 'block', _key: 'p9', style: 'normal', children: [{ _type: 'span', _key: 's18', text: 'The light trail effects on these are UNREAL. They glow in the dark zones!' }] },
+      { _type: 'block', _key: 'h10', style: 'h2', children: [{ _type: 'span', _key: 's19', text: '2. Kratos (God of War)' }] },
+      { _type: 'block', _key: 'p10', style: 'normal', children: [{ _type: 'span', _key: 's20', text: 'Absolute legend. Comes with the Leviathan Axe pickaxe and Mimir back bling!' }] },
+      { _type: 'block', _key: 'h11', style: 'h2', children: [{ _type: 'span', _key: 's21', text: '1. OG Remix: Renegade Raider' }] },
+      { _type: 'block', _key: 'p11', style: 'normal', children: [{ _type: 'span', _key: 's22', text: 'The remix version of this OG skin is perfect. Everyone can finally have a version of this iconic skin!' }] },
+      { _type: 'block', _key: 'q1', style: 'blockquote', children: [{ _type: 'span', _key: 's23', text: "Remember: Every skin is a winner if YOU like it! Don't let anyone tell you your favorite skin isn't cool." }] },
+      { _type: 'block', _key: 'p12', style: 'normal', children: [{ _type: 'span', _key: 's24', text: "What's YOUR favorite skin this month? Let me know! 🎮" }] },
+    ],
+  },
+  {
+    _type: 'post',
+    title: 'All Mythic Weapons Ranked - Chapter 6 Season 1',
+    slug: { _type: 'slug', current: 'mythic-weapons-guide' },
+    excerpt: "Which mythic is worth fighting for? I break down every mythic weapon and tell you if they're OP or not worth the risk!",
+    category: 'reviews',
+    rarity: 'legendary',
+    readTime: 5,
+    featured: true,
+    publishedAt: '2024-12-12T00:00:00Z',
+    content: [
+      { _type: 'block', _key: 'h1', style: 'h2', children: [{ _type: 'span', _key: 's1', text: 'Mythic Weapon Tier List' }] },
+      { _type: 'block', _key: 'p1', style: 'normal', children: [{ _type: 'span', _key: 's2', text: "Mythic weapons are back and they're BROKEN (in a good way)! But which ones are actually worth risking your game for? Let's break it down!" }] },
+      { _type: 'block', _key: 'h2', style: 'h2', children: [{ _type: 'span', _key: 's3', text: 'S-TIER (Must Have)' }] },
+      { _type: 'block', _key: 'h3', style: 'h3', children: [{ _type: 'span', _key: 's4', text: "Zeus's Lightning Bolt" }] },
+      { _type: 'block', _key: 'p2', style: 'normal', children: [{ _type: 'span', _key: 's5', text: "This thing is INSANE. It chains lightning to nearby enemies and does massive damage. The range is crazy and it's basically a free win in final circles. Damage: 90 per bolt. Special: Chain lightning hits up to 3 enemies." }] },
+      { _type: 'block', _key: 'h4', style: 'h3', children: [{ _type: 'span', _key: 's6', text: "Cerberus's Assault Rifle" }] },
+      { _type: 'block', _key: 'p3', style: 'normal', children: [{ _type: 'span', _key: 's7', text: 'Three-headed beast of a gun. Fast fire rate, huge damage, barely any recoil. Best AR in the game right now.' }] },
+      { _type: 'block', _key: 'h5', style: 'h2', children: [{ _type: 'span', _key: 's8', text: 'A-TIER (Really Good)' }] },
+      { _type: 'block', _key: 'h6', style: 'h3', children: [{ _type: 'span', _key: 's9', text: "Hades's Snap" }] },
+      { _type: 'block', _key: 'p4', style: 'normal', children: [{ _type: 'span', _key: 's10', text: 'Teleports you a short distance and damages nearby enemies. Amazing for repositioning and escaping the storm.' }] },
+      { _type: 'block', _key: 'h7', style: 'h3', children: [{ _type: 'span', _key: 's11', text: "Ares's Blade" }] },
+      { _type: 'block', _key: 'p5', style: 'normal', children: [{ _type: 'span', _key: 's12', text: 'Mythic melee weapon with insane lunge distance. Great for piece control and finishing kills.' }] },
+      { _type: 'block', _key: 'h8', style: 'h2', children: [{ _type: 'span', _key: 's13', text: 'B-TIER (Situationally Good)' }] },
+      { _type: 'block', _key: 'h9', style: 'h3', children: [{ _type: 'span', _key: 's14', text: "Poseidon's Trident" }] },
+      { _type: 'block', _key: 'p6', style: 'normal', children: [{ _type: 'span', _key: 's15', text: 'Powerful but slow. Great for breaking builds but the throw animation is too long. Only good if you can catch someone off guard.' }] },
+      { _type: 'block', _key: 'h10', style: 'h2', children: [{ _type: 'span', _key: 's16', text: 'Tips for Getting Mythics' }] },
+      { _type: 'block', _key: 'p7', style: 'normal', children: [{ _type: 'span', _key: 's17', text: 'Land directly on the boss location, bring a squad (bosses have tons of HP), grab a weapon first before attacking, and third-party other players fighting the boss.' }] },
+      { _type: 'block', _key: 'q1', style: 'blockquote', children: [{ _type: 'span', _key: 's18', text: "Sometimes the best play is letting someone else kill the boss, then taking them out after they're weak!" }] },
+      { _type: 'block', _key: 'h11', style: 'h3', children: [{ _type: 'span', _key: 's19', text: 'Are Mythics Worth It?' }] },
+      { _type: 'block', _key: 'p8', style: 'normal', children: [{ _type: 'span', _key: 's20', text: "Honestly? Yes, but only if you're confident in early game fights. If you're going for wins, sometimes it's better to skip the mythic and play safe." }] },
+      { _type: 'block', _key: 'p9', style: 'normal', children: [{ _type: 'span', _key: 's21', text: 'Good luck hunting those mythics! ⚡🔱' }] },
+    ],
+  },
+  {
+    _type: 'post',
+    title: 'Zero Build vs Build Mode: Which Should YOU Play?',
+    slug: { _type: 'slug', current: 'zero-build-vs-build-mode' },
+    excerpt: 'The ultimate debate! I compare both modes and help you figure out which one fits your playstyle better.',
+    category: 'tips',
+    rarity: 'rare',
+    readTime: 4,
+    featured: false,
+    publishedAt: '2024-12-08T00:00:00Z',
+    content: [
+      { _type: 'block', _key: 'h1', style: 'h2', children: [{ _type: 'span', _key: 's1', text: 'The Great Debate' }] },
+      { _type: 'block', _key: 'p1', style: 'normal', children: [{ _type: 'span', _key: 's2', text: "Ever since Zero Build came out, the Fortnite community has been DIVIDED. Some people think building is what makes Fortnite special. Others think Zero Build is the best thing Epic ever did. So which one should YOU play?" }] },
+      { _type: 'block', _key: 'h2', style: 'h2', children: [{ _type: 'span', _key: 's3', text: 'Zero Build Mode' }] },
+      { _type: 'block', _key: 'h3', style: 'h3', children: [{ _type: 'span', _key: 's4', text: 'Pros' }] },
+      { _type: 'block', _key: 'p2', style: 'normal', children: [{ _type: 'span', _key: 's5', text: 'Easier to learn, focus purely on aiming and positioning, overshield makes you tankier, games feel more chill, and great for playing with friends who are new.' }] },
+      { _type: 'block', _key: 'h4', style: 'h3', children: [{ _type: 'span', _key: 's6', text: 'Cons' }] },
+      { _type: 'block', _key: 'p3', style: 'normal', children: [{ _type: 'span', _key: 's7', text: 'Less skill expression, can feel random sometimes, getting caught in the open = death, and cover is limited to what\'s on the map.' }] },
+      { _type: 'block', _key: 'h5', style: 'h2', children: [{ _type: 'span', _key: 's8', text: 'Build Mode' }] },
+      { _type: 'block', _key: 'h6', style: 'h3', children: [{ _type: 'span', _key: 's9', text: 'Pros' }] },
+      { _type: 'block', _key: 'p4', style: 'normal', children: [{ _type: 'span', _key: 's10', text: 'Higher skill ceiling, create your own cover anywhere, more satisfying when you outplay someone, the "real" Fortnite experience, and competitive scene is all Build Mode.' }] },
+      { _type: 'block', _key: 'h7', style: 'h3', children: [{ _type: 'span', _key: 's11', text: 'Cons' }] },
+      { _type: 'block', _key: 'p5', style: 'normal', children: [{ _type: 'span', _key: 's12', text: 'Steep learning curve, can be frustrating against better builders, and sweats everywhere 😅' }] },
+      { _type: 'block', _key: 'h8', style: 'h2', children: [{ _type: 'span', _key: 's13', text: 'My Recommendation' }] },
+      { _type: 'block', _key: 'q1', style: 'blockquote', children: [{ _type: 'span', _key: 's14', text: "Start with Zero Build to learn the game basics, then move to Build Mode when you're ready for a challenge!" }] },
+      { _type: 'block', _key: 'p6', style: 'normal', children: [{ _type: 'span', _key: 's15', text: "If you just want to chill and have fun with friends, Zero Build is perfect. If you want to grind, improve, and eventually go competitive, Build Mode is where it's at." }] },
+      { _type: 'block', _key: 'p7', style: 'normal', children: [{ _type: 'span', _key: 's16', text: "Personally, I play both! Zero Build when I'm tired or playing with new friends, Build Mode when I want to sweat and improve." }] },
+      { _type: 'block', _key: 'p8', style: 'normal', children: [{ _type: 'span', _key: 's17', text: 'What mode do you prefer? No wrong answers here! 🏗️' }] },
+    ],
+  },
+]
+
+async function seedPosts() {
+  console.log('🚀 Starting to seed posts...\n')
+
+  for (const post of posts) {
+    try {
+      const result = await client.create(post)
+      console.log(`✅ Created: ${post.title}`)
+      console.log(`   ID: ${result._id}\n`)
+    } catch (error) {
+      console.error(`❌ Failed to create: ${post.title}`)
+      console.error(`   Error: ${error}\n`)
+    }
+  }
+
+  console.log('🎉 Seeding complete!')
+}
+
+seedPosts()
