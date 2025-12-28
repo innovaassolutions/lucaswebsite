@@ -1,4 +1,4 @@
-import { client } from '../../sanity/lib/client'
+import { client, isSanityConfigured } from '../../sanity/lib/client'
 import {
   postsQuery,
   postQuery,
@@ -25,28 +25,36 @@ export interface BlogPost {
 
 // Fetch all posts from Sanity
 export async function getAllPosts(): Promise<BlogPost[]> {
+  if (!isSanityConfigured || !client) return []
   return await client.fetch(postsQuery)
 }
 
 // Fetch a single post by slug from Sanity
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  if (!isSanityConfigured || !client) return null
   return await client.fetch(postQuery, { slug })
 }
 
 // Fetch featured posts from Sanity
 export async function getFeaturedPosts(): Promise<BlogPost[]> {
+  if (!isSanityConfigured || !client) return []
   return await client.fetch(featuredPostsQuery)
 }
 
 // Fetch posts by category from Sanity
 export async function getPostsByCategory(category: Category): Promise<BlogPost[]> {
+  if (!isSanityConfigured || !client) return []
   return await client.fetch(postsByCategoryQuery, { category })
 }
 
 // Get all post slugs for static generation
 export async function getAllPostSlugs(): Promise<{ slug: string }[]> {
+  if (!isSanityConfigured || !client) return []
   return await client.fetch(postSlugsQuery)
 }
+
+// Check if Sanity is configured (exported for components to show setup message)
+export { isSanityConfigured }
 
 // Get all categories (static)
 export function getAllCategories(): Category[] {

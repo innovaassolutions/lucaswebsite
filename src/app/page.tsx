@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getAllPosts, getFeaturedPosts } from '@/data/posts';
+import { getAllPosts, getFeaturedPosts, isSanityConfigured } from '@/data/posts';
 import BlogCard from '@/components/BlogCard';
 
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -13,6 +13,19 @@ export default async function Home() {
 
   return (
     <div>
+      {/* Setup Banner - shown when Sanity is not configured */}
+      {!isSanityConfigured && (
+        <div className="bg-gradient-to-r from-[var(--legendary-orange)] to-[var(--victory-gold)] text-black py-3 px-4">
+          <div className="max-w-7xl mx-auto text-center text-sm font-medium">
+            ⚙️ Sanity CMS not configured.{' '}
+            <Link href="/studio" className="underline font-bold">
+              Set up your project
+            </Link>{' '}
+            to start adding blog posts!
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         {/* Decorative shapes */}
